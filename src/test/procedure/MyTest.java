@@ -1,4 +1,4 @@
-package test;
+package test.procedure;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
