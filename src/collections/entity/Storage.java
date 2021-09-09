@@ -3,14 +3,14 @@ package collections.entity;
 import java.util.List;
 import java.util.Objects;
 
-public class Exchange {
+public class Storage {
     private List<Account> accounts;
     private List<Client> clients;
 
-    public Exchange() {
+    public Storage() {
     }
 
-    public Exchange(List<Account> accounts, List<Client> clients) {
+    public Storage(List<Account> accounts, List<Client> clients) {
         this.accounts = accounts;
         this.clients = clients;
     }
@@ -34,9 +34,9 @@ public class Exchange {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Exchange)) return false;
-        Exchange exchange = (Exchange) o;
-        return Objects.equals(getAccounts(), exchange.getAccounts()) && Objects.equals(getClients(), exchange.getClients());
+        if (!(o instanceof Storage)) return false;
+        Storage storage = (Storage) o;
+        return Objects.equals(getAccounts(), storage.getAccounts()) && Objects.equals(getClients(), storage.getClients());
     }
 
     @Override

@@ -2,27 +2,32 @@ package collections;
 
 import collections.entity.Account;
 import collections.entity.Client;
-import collections.entity.Exchange;
+import collections.entity.Storage;
 import collections.service.AccountService;
+import collections.service.StorageFactory;
 
+import java.time.Instant;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         AccountService accountService = new AccountService();
-        Exchange exchange = accountService.initializeExchange();
-        System.out.println(exchange);
+        StorageFactory storageFactory = new StorageFactory();
 
-        List<Account> result1 = accountService.getAccountsByClientIdAndAccounts(5, exchange.getAccounts());
-        System.out.println(result1);
+        Storage storage = storageFactory.initializeStorage();
+        System.out.println("Created storage: " + storage);
 
-        List<Account> result2 = accountService.getAccountsByClientIdAndClients(5, exchange.getClients());
-        System.out.println(result2);
+        Client client = new Client();
+        client.setId(3);
+        client.setBornDate(Instant.parse("1992-04-20T00:00:00.000Z"));
+        client.setName("name3");
+        List<Account> resultAccountList = accountService.getAccountsByClient(client, storage);
+        System.out.println("Result account list: " + resultAccountList);
 
-        Client resultClient1 = accountService.findClientByAccountIdAndAccounts(5, exchange.getAccounts());
-        System.out.println(resultClient1);
-
-        Client resultClient2 = accountService.findClientByAccountIdAndClients(5, exchange.getClients());
-        System.out.println(resultClient2);
+        Account account = new Account();
+        account.setId(7);
+        account.setCount(2000);
+        Client resultClient = accountService.getClientByAccount(account, storage);
+        System.out.println("Found client: " + resultClient);
     }
 }
