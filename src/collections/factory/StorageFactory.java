@@ -5,10 +5,7 @@ import collections.entity.Client;
 import collections.entity.Storage;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class StorageFactory {
     /**
@@ -71,16 +68,16 @@ public class StorageFactory {
         return new Storage(accounts, clients);
     }
 
-    public HashMap<Client, List<Account>> initializeMapWithKeyClient(Storage storage) {
-        HashMap<Client, List<Account>> map = new HashMap<>();
+    public Map<Client, List<Account>> initializeMapWithKeyClient(Storage storage) {
+        Map<Client, List<Account>> map = new HashMap<>();
         for (Client client : storage.getClients()) {
             map.put(client, client.getAccounts());
         }
         return map;
     }
 
-    public HashMap<Account, Client> initializeMapWithKeyAccount(Storage storage) {
-        HashMap<Account, Client> map = new HashMap<>();
+    public Map<Account, Client> initializeMapWithKeyAccount(Storage storage) {
+        Map<Account, Client> map = new HashMap<>();
         for (Account account : storage.getAccounts()) {
             map.put(account, account.getClient());
         }
