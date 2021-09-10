@@ -73,6 +73,7 @@ public class Client {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", bornDate=" + bornDate +
+                ", accounts=" + accounts +
                 '}';
     }
 }

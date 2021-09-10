@@ -17,7 +17,7 @@ public class StorageFactory {
      * Rules for setting parameters are for example only, it can be improved
      * @return collections.entity.Storage
      */
-    private Storage initializeStorageWithList() {
+    public Storage initializeStorageWithList() {
         Account account1 = new Account();
         account1.setId(UUID.fromString("c111f1e6-df3b-45ae-badd-5f073f0c97c6"));
         account1.setCount(5000);
@@ -71,18 +71,16 @@ public class StorageFactory {
         return new Storage(accounts, clients);
     }
 
-    public HashMap<Client, List<Account>> initializeMapWithKeyClient() {
+    public HashMap<Client, List<Account>> initializeMapWithKeyClient(Storage storage) {
         HashMap<Client, List<Account>> map = new HashMap<>();
-        Storage storage = initializeStorageWithList();
         for (Client client : storage.getClients()) {
             map.put(client, client.getAccounts());
         }
         return map;
     }
 
-    public HashMap<Account, Client> initializeMapWithKeyAccount() {
+    public HashMap<Account, Client> initializeMapWithKeyAccount(Storage storage) {
         HashMap<Account, Client> map = new HashMap<>();
-        Storage storage = initializeStorageWithList();
         for (Account account : storage.getAccounts()) {
             map.put(account, account.getClient());
         }
