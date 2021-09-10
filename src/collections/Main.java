@@ -3,10 +3,10 @@ package collections;
 import collections.entity.Account;
 import collections.entity.Client;
 import collections.entity.Storage;
+import collections.service.AccountService;
 import collections.factory.StorageFactory;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -14,6 +14,7 @@ import java.util.UUID;
 public class Main {
     public static void main(String[] args) {
         StorageFactory storageFactory = new StorageFactory();
+        AccountService accountService = new AccountService();
         Storage storage = storageFactory.initializeStorageWithList();
         System.out.println("Created objects: " + storage);
 
@@ -27,11 +28,11 @@ public class Main {
         account.setCount(5000);
 
         Map<Client, List<Account>> mapWithKeyClient = storageFactory.initializeMapWithKeyClient(storage);
-        List<Account> resultAccountList = mapWithKeyClient.get(client);
+        List<Account> resultAccountList = accountService.getAccountsByClient(client, mapWithKeyClient);
         System.out.println("Result accounts from Map: " + resultAccountList);
 
         Map<Account, Client> mapWithKeyAccount = storageFactory.initializeMapWithKeyAccount(storage);
-        Client resultClient = mapWithKeyAccount.get(account);
+        Client resultClient = accountService.getClientByAccount(account, mapWithKeyAccount);
         System.out.println("Result client from Map: " + resultClient);
     }
 }
