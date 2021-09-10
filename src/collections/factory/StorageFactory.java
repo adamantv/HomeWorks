@@ -1,4 +1,4 @@
-package collections.service;
+package collections.factory;
 
 import collections.entity.Account;
 import collections.entity.Client;
@@ -6,6 +6,7 @@ import collections.entity.Storage;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ public class StorageFactory {
      * Rules for setting parameters are for example only, it can be improved
      * @return collections.entity.Storage
      */
-    public Storage initializeStorage() {
+    private Storage initializeStorageWithList() {
         Account account1 = new Account();
         account1.setId(UUID.fromString("c111f1e6-df3b-45ae-badd-5f073f0c97c6"));
         account1.setCount(5000);
@@ -68,5 +69,23 @@ public class StorageFactory {
         List<Client> clients = Arrays.asList(client1, client2, client3);
         List<Account> accounts = Arrays.asList(account1, account2, account3, account4, account5, account6);
         return new Storage(accounts, clients);
+    }
+
+    public HashMap<Client, List<Account>> initializeMapWithKeyClient() {
+        HashMap<Client, List<Account>> map = new HashMap<>();
+        Storage storage = initializeStorageWithList();
+        for (Client client : storage.getClients()) {
+            map.put(client, client.getAccounts());
+        }
+        return map;
+    }
+
+    public HashMap<Account, Client> initializeMapWithKeyAccount() {
+        HashMap<Account, Client> map = new HashMap<>();
+        Storage storage = initializeStorageWithList();
+        for (Account account : storage.getAccounts()) {
+            map.put(account, account.getClient());
+        }
+        return map;
     }
 }
