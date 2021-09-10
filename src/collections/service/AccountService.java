@@ -10,9 +10,7 @@ public class AccountService {
     public List<Account> getAccountsByClient(Client client, Storage storage) {
         for (Client inputClient : storage.getClients()) {
             if (inputClient.getAccounts() != null) {
-                if (inputClient.getId() == client.getId() &&
-                        inputClient.getName().equals(client.getName()) &&
-                        inputClient.getBornDate().equals(client.getBornDate())) {
+                if (inputClient.equals(client)) {
                     return inputClient.getAccounts();
                 }
             }
@@ -22,8 +20,7 @@ public class AccountService {
 
     public Client getClientByAccount(Account account, Storage storage) {
         for (Account inputAccount : storage.getAccounts()) {
-            if (inputAccount.getId() == account.getId() &&
-            inputAccount.getCount() == account.getCount()) {
+            if (inputAccount.equals(account)) {
                 return inputAccount.getClient();
             }
         }

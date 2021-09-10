@@ -1,26 +1,27 @@
 package collections.entity;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Account {
-    private long id;
+    private UUID id;
     private Client client;
     private long count;
 
     public Account() {
     }
 
-    public Account(long id, Client client, long count) {
+    public Account(UUID id, Client client, long count) {
         this.id = id;
         this.client = client;
         this.count = count;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -45,12 +46,12 @@ public class Account {
         if (this == o) return true;
         if (!(o instanceof Account)) return false;
         Account account = (Account) o;
-        return getId() == account.getId() && getCount() == account.getCount() && Objects.equals(getClient(), account.getClient());
+        return getCount() == account.getCount() && getId().equals(account.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getClient(), getCount());
+        return Objects.hash(getId(), getCount());
     }
 
     @Override
