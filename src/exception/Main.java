@@ -8,6 +8,11 @@ public class Main {
         CalculationService calculationService = new CalculationService();
         String inputString = inputDataHandler.readStringFromKeyboard();
         int number = inputDataHandler.parseString(inputString);
-        calculationService.calculate(number);
+        try {
+            calculationService.checkNumberForZero(number);
+            calculationService.calculate(number);
+        } catch (Exception e) {
+            System.out.println("Error worker");
+        }
     }
 }
