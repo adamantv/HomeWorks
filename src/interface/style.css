@@ -1,0 +1,78 @@
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.input-field {
+    margin-left: 1em;
+    padding: .5em;
+    margin-bottom: .5em;
+    height: 30px;
+    width: auto;
+    border: 1px solid steelblue;
+    border-radius: 2px;
+}
+
+.input-select {
+    margin-left: 1em;
+    margin-bottom: .5em;
+    width: auto;
+    height: 30px;
+    border: 1px solid steelblue;
+    border-radius: 2px;
+}
+
+#survey-form {
+    width: 70%;
+    max-width: 640px;
+}
+
+.row > * {
+    flex-basis: 50%;
+    box-sizing: border-box;
+}
+
+.row label {
+    text-align: left;
+}
+
+.rectangle {
+    display: block;
+    width: 800px;
+    height: auto;
+    border: 1px solid steelblue;
+    padding: 10px;
+}
+
+h1, h2 {
+    font-size: 20px;
+}
+
+.statTab {
+    border: 1px solid steelblue;
+    border-collapse: collapse;
+}
+
+.statTab tr td {
+    border: 1px solid steelblue;
+    padding: 5px;
+    height: 15px;
+    text-align: left;
+}
+
+.firstColumn {
+    width: 400px;
+}
+
+.intermediateColumn, .lastColumn {
+    width: 150px;
+}
+
+#global {
+    margin-left: 10px;
+}
+
+#datePicker {
+    font-family: arial, serif;
+}
