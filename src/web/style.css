@@ -61,11 +61,11 @@ h1, h2 {
     text-align: left;
 }
 
-.firstColumn {
+.nameColumn {
     width: 400px;
 }
 
-.intermediateColumn, .lastColumn {
+.commonColumn, .ageColumn {
     width: 150px;
 }
 

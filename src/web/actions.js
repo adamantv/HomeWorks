@@ -2,7 +2,7 @@
  * function for processing the entered information and transforming the students table
  */
 function getDataTable() {
-    const table = document.getElementById("dataTable");
+    const table = document.getElementById("dataTable").getElementsByTagName("tbody")[0];
     const name = document.getElementById("name").value;
     const gender = document.getElementById("gender").value;
     const inputBornDate = document.getElementById("datePicker").value; //get date YYYY-DD-MM
@@ -26,23 +26,21 @@ function getDataTable() {
  * @param params - array with input parameters
  */
 function addNewRow(table, params) {
-    const newRow = document.createElement("tr");
+    const newRow = table.insertRow(-1);
     const tableColumnCount = getTableColumnCount(table);
     for (let i = 0; i < tableColumnCount; i++) {
         const newCell = document.createElement("td");
         //add class to cells classList, depending on cell number
         if (i === 0) {
-            newCell.classList.add('firstColumn');
+            newCell.classList.add('nameColumn');
         } else if (i === tableColumnCount - 1) {
-            newCell.classList.add('lastColumn');
+            newCell.classList.add('ageColumn');
         } else {
-            newCell.classList.add('intermediateColumn');
+            newCell.classList.add('commonColumn');
         }
         newCell.innerHTML = params[i];
         newRow.appendChild(newCell);
     }
-    let row = getFirstRowWithoutPersonData(table);
-    row.before(newRow);
 }
 
 /**
@@ -69,21 +67,12 @@ function getTableColumnCount(table) {
  */
 function calculateAgeCount(dateString) {
     const birthDay = new Date(dateString);
-    return Math.floor((new Date() - new Date(birthDay)) / 1000 / 60 / 60 / 24 / 365);
-}
-
-/**
- *
- * @param table - students table
- * @returns {*} - first row without personal data
- */
-function getFirstRowWithoutPersonData(table) {
-    let columnCount = getTableColumnCount(table);
-    let rowCount = table.rows.length;
-    for (let i = 0; i < rowCount; i++) {
-        if (table.rows[i].cells.length < columnCount) {
-            return table.rows[i];
-        }
+    const age = Math.floor((new Date() - new Date(birthDay)) / 1000 / 60 / 60 / 24 / 365);
+    if (age < 0) {
+        alert("Введите корректную дату!")
+        return 0;
+    } else {
+        return age;
     }
 }
 
@@ -92,7 +81,7 @@ function getFirstRowWithoutPersonData(table) {
  */
 function calculateAverage() {
     //find a list of elements with a class that contains age values
-    const classes = document.getElementsByClassName("lastColumn");
+    const classes = document.getElementsByClassName("ageColumn");
     let sum = 0;
     if (classes.length > 0) {
         for (let i = 0; i < classes.length; i++) {
