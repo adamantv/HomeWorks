@@ -9,10 +9,14 @@ function getDataTable() {
     const transformedBornDate = inputBornDate.split('-').reverse().join('.'); //transform date: YYYY-DD-MM -> DD.MM.YYYY for print in table
     const ageCount = calculateAgeCount(inputBornDate);
     if (name) {
+    if (name.length < 5 || name.length > 50) {
+        alert("Введено некорректное имя!")
+    } else {
         let inputParams = [name, gender, transformedBornDate, ageCount];
         addNewRow(table, inputParams);
+    }
     } else {
-        alert("Введите имя!");
+        alert("Имя нужно обязательно заполнить!");
     }
     calculateAverage();
 }
@@ -68,7 +72,7 @@ function getTableColumnCount(table) {
 function calculateAgeCount(dateString) {
     const birthDay = new Date(dateString);
     const age = Math.floor((new Date() - new Date(birthDay)) / 1000 / 60 / 60 / 24 / 365);
-    if (age < 0) {
+    if (age < 0 || age > 100) {
         alert("Введите корректную дату!")
         return 0;
     } else {
