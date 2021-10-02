@@ -32,11 +32,12 @@ public class GameTest {
         System.out.println("Captured string: " + byteArrayOutputStream);
         if (byteArrayOutputStream.toString().contains(PLAYER_1.getName())
                 || byteArrayOutputStream.toString().contains(PLAYER_2.getName())) {
-            System.err.println("Test failed. Nobody won!");
+            System.err.println("Test failed. Nobody won!\n");
         } else {
             //в логике приложения нет описанного поведения в случае ничьи, поэтому просто используется else
-            System.out.println("We have a tie!");
+            System.out.println("We have a tie!\n");
         }
+        System.out.println("--------------------------");
     }
 
     public void testCheckVictoryOfFirstPlayer() {
@@ -58,10 +59,11 @@ public class GameTest {
         System.setOut(old);
         System.out.println("Captured string: " + byteArrayOutputStream);
         if (byteArrayOutputStream.toString().contains(PLAYER_1.getName())) {
-            System.out.println("Test completed. Winner is first player");
+            System.out.println("Test completed. Winner is first player\n");
         } else {
-            System.err.println("Test failed. Second player must be win");
+            System.err.println("Test failed. Second player must be win\n");
         }
+        System.out.println("--------------------------");
     }
 
     public void testCheckVictoryOfSecondPlayer() {
@@ -85,10 +87,11 @@ public class GameTest {
         System.setOut(old);
         System.out.println("Captured string: " + byteArrayOutputStream);
         if (byteArrayOutputStream.toString().contains(player2.getName())) {
-            System.out.println("Test completed. Winner is second player");
+            System.out.println("Test completed. Winner is second player\n");
         } else {
-            System.err.println("Test failed. Second player must be win");
+            System.err.println("Test failed. Second player must be win\n");
         }
+        System.out.println("--------------------------");
     }
 
 }
