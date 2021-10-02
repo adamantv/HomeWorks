@@ -1,6 +1,9 @@
 package otus;
 
 
+import otus.test.DiceTest;
+import otus.test.GameTest;
+
 public class HomeWork {
 
     /*
@@ -14,6 +17,13 @@ public class HomeWork {
         Информацию о пройденном тесте предлагается выводить в System.out, а об упавшем в System.err
      */
     public static void main(String[] args) {
+        DiceTest diceTest = new DiceTest();
+        diceTest.checkValue();
+
+        GameTest gameTest = new GameTest();
+        gameTest.testTheSameResult();
+        gameTest.testCheckVictoryOfFirstPlayer();
+        gameTest.testCheckVictoryOfSecondPlayer();
 
     }
     

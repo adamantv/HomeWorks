@@ -1,6 +1,6 @@
 package otus;
 
-import ru.otus.game.*;
+import otus.game.*;
 
 public class Demo {
 
