@@ -5,7 +5,6 @@ import otus.test.DiceTest;
 import otus.test.GameTest;
 
 public class HomeWork {
-
     /*
         Заготовка для ДЗ представляет собой игру в кости.
         При вызове game.playGame(), два игрока кидают кости.
@@ -18,13 +17,9 @@ public class HomeWork {
      */
     public static void main(String[] args) {
         GameTest gameTest = new GameTest();
-        gameTest.testCheckVictoryOfFirstPlayer();
-        gameTest.testCheckVictoryOfSecondPlayer();
-        gameTest.testTheSameResult();
+        gameTest.runAllTests();
 
         DiceTest diceTest = new DiceTest();
         diceTest.checkValue();
-
     }
-    
 }
