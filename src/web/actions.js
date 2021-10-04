@@ -105,7 +105,7 @@ function calculateAverage() {
 }
 
 /**
- * function for calculate today date for the default calendar
+ * function for calculate today date minus 15 years for the default calendar
  */
 function calculateDefaultDate() {
     Date.prototype.toDateInputValue = (function () {
