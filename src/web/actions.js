@@ -1,3 +1,8 @@
+window.onload = function() {
+    calculateDefaultDate();
+    calculateAverage();
+};
+
 /**
  * function for processing the entered information and transforming the students table
  */
@@ -97,4 +102,16 @@ function calculateAverage() {
     const targetCell = document.getElementById("middleAgeCount");
     //inserting a calculated value into the target cell
     targetCell.innerHTML = average.toString();
+}
+
+/**
+ * function for calculate today date for the default calendar
+ */
+function calculateDefaultDate() {
+    Date.prototype.toDateInputValue = (function () {
+        const local = new Date(this);
+        local.setFullYear(this.getFullYear() - 15);
+        return local.toJSON().slice(0, 10);
+    });
+    document.getElementById("datePicker").value = new Date().toDateInputValue();
 }
