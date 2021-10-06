@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма добавления информации о студенте</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="actions.js"></script>
+</head>
+<body>
+<div id="global">
+    <h1>Форма добавления информации о студенте</h1>
+    <form id="survey-form">
+        <div class="rectangle">
+            <div class="row">
+                <label for="name">Имя студента:</label>
+                <input type="text" id="name" class="input-field" required placeholder="Введите имя">
+            </div>
+            <br>
+            <div class="row">
+                <label for="datePicker">Дата рождения:</label>
+                <input id="datePicker" type="date" class="input-field">
+                <script src="calculateTodayDate.js"></script>
+            </div>
+            <br>
+            <div class="row">
+                <label for="gender">Пол:</label>
+                <select id="gender" class="input-select">
+                    <option value="женщина">женщина</option>
+                    <option value="мужчина">мужчина</option>
+                </select>
+            </div>
+            <br>
+            <input type="button" value="Добавить" onclick="getDataTable()">
+        </div>
+    </form>
+    <h1>Таблица студентов</h1>
+    <table class="statTab" id="dataTable">
+        <thead>
+        <tr>
+            <td><b>Имя студента</b></td>
+            <td><b>Пол</b></td>
+            <td><b>Дата рождения</b></td>
+            <td><b>Возраст</b></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="nameColumn">Иван Ограномович Штейн</td>
+            <td class="commonColumn">мужчина</td>
+            <td class="commonColumn">12.06.1974</td>
+            <td class="ageColumn">46</td>
+        </tr>
+        <tr>
+            <td class="nameColumn">Гертруда Анатольевна Иванова</td>
+            <td class="commonColumn">женщина</td>
+            <td class="commonColumn">01.01.1987</td>
+            <td class="ageColumn">34</td>
+        </tr>
+        <tr>
+            <td class="nameColumn">Воланд Игоревич Муха</td>
+            <td class="commonColumn">мужчина</td>
+            <td class="commonColumn">27.06.1974</td>
+            <td class="ageColumn">47</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4"></td>
+        </tr>
+        <tr>
+            <td colspan="3" id="middleAgeText">Средний возраст студентов</td>
+            <td id="middleAgeCount">0</td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</body>
+</html>
