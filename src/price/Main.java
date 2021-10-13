@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         Service service = new Service();
-        long inputNumber = 12345678L;
+        long inputNumber = 12345671L;
         List<Long> numberList = service.getSegments(inputNumber);
         ArrayList<String> result = new ArrayList<>();
         System.out.println(numberList);
@@ -18,9 +18,7 @@ public class Main {
             int hundred = service.getHundred(number);
             int decimal = service.getDecimal(number);
             int unit = service.getUnit(number);
-            System.out.println(hundred);
-            System.out.println(decimal);
-            System.out.println(unit);
+            System.out.println(hundred + " " + decimal + " " + unit);
             String first = service.analyzeHundred(hundred);
             String second = service.analyzeDecimal(decimal, unit);
             String third = "";

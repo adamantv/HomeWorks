@@ -34,7 +34,7 @@ public class Service {
      * Например: 5001 -> [5, 1]
      *
      * @param number - исходное число
-     * @return -
+     * @return - список порядков числа
      */
     public List<Long> getSegments(long number) {
         List<Long> segments = new ArrayList<>();
@@ -100,6 +100,7 @@ public class Service {
     public String analyzeUnit(int unit) {
         return switch (unit) {
             case 0 -> "";
+            case 1 -> "один";
             case 2 -> "два";
             case 3 -> "три";
             case 4 -> "четыре";
