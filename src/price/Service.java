@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Service {
     public Integer getInputNumber() {
@@ -28,19 +29,56 @@ public class Service {
         return null;
     }
 
-    public int getLastChat(int number) {
-        return number % 10;
+    /**
+     * Исходное число делится на список порядков (сегментов) для дальнейшего преобразования
+     * Например: 5001 -> [5, 1]
+     *
+     * @param number - исходное число
+     * @return -
+     */
+    public List<Long> getSegments(long number) {
+        List<Long> segments = new ArrayList<>();
+        while (number > 999) {
+            long seg = number / 1000;
+            segments.add(number - (seg * 1000));
+            number = seg;
+        }
+        segments.add(number);
+        Collections.reverse(segments);
+        System.out.println(segments);
+        return segments;
     }
 
-    public ArrayList<Integer> getNumberList(int number) {
-        int temp = number;
-        ArrayList<Integer> array = new ArrayList<Integer>();
-        do {
-            array.add(temp % 10);
-            temp /= 10;
-        } while (temp > 0);
-        Collections.reverse(array);
-        return array;
+    public String analyzeHundred(int hundred) {
+        return switch (hundred) {
+            case 0 -> "";
+            case 1 -> "сто";
+            case 2 -> "двести";
+            case 3 -> "триста";
+            case 4 -> "четыреста";
+            case 5 -> "пятьсот";
+            case 6 -> "шестьсот";
+            case 7 -> "семьсот";
+            case 8 -> "восемьсот";
+            case 9 -> "девятьсот";
+            default -> throw new IllegalStateException("Unexpected value: " + hundred);
+        };
+    }
+
+    public String analyzeDecimal(int decimal, int unit) {
+        return switch (decimal) {
+            case 0 -> "";
+            case 1 -> getValue(unit); //вызов метода
+            case 2 -> "двадцать";
+            case 3 -> "тридцать";
+            case 4 -> "сорок";
+            case 5 -> "пятьдесят";
+            case 6 -> "шестьдесят";
+            case 7 -> "семьдесят";
+            case 8 -> "восемьдесят";
+            case 9 -> "девяносто";
+            default -> throw new IllegalStateException("Unexpected value: " + decimal);
+        };
     }
 
     public String getValue(int num) {
@@ -58,5 +96,33 @@ public class Service {
             default -> throw new IllegalStateException("Unexpected value: " + num);
         };
     }
+
+    public String analyzeUnit(int unit) {
+        return switch (unit) {
+            case 0 -> "";
+            case 2 -> "два";
+            case 3 -> "три";
+            case 4 -> "четыре";
+            case 5 -> "пять";
+            case 6 -> "шесть";
+            case 7 -> "семь";
+            case 8 -> "восемь";
+            case 9 -> "девять";
+            default -> throw new IllegalStateException("Unexpected value: " + unit);
+        };
+    }
+
+    public int getHundred(long number) {
+        return (int) (number / 100); //число сотен
+    }
+
+    public int getDecimal(long number) {
+        return (int) (number % 100 / 10); //число десятков
+    }
+
+    public int getUnit(long number) {
+        return (int) (number % 10); //число единиц
+    }
+
 
 }
