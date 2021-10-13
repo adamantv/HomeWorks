@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Service service = new Service();
         long inputNumber = 12345671L;
+        System.out.println("inputNumber: " + inputNumber);
         List<Long> numberList = service.getSegments(inputNumber);
         ArrayList<String> result = new ArrayList<>();
         System.out.println(numberList);
