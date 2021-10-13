@@ -17,11 +17,11 @@ public class Main {
         ArrayList<String> resultList = new ArrayList<>();
         for (Number number : numbers) {
             System.out.println(number);
-            String first = service.analyzeHundred(number);
-            String second = service.analyzeDecimal(number);
-            String third = service.analyzeUnit(number, originValue);
-            String word = service.getWord(number);
-            Collections.addAll(resultList, first, second, third, word);
+            String hundredWord = service.analyzeHundred(number);
+            String decimalWord = service.analyzeDecimal(number);
+            String unitWord = service.analyzeUnit(number, originValue);
+            String digitWord = service.getWord(number);
+            Collections.addAll(resultList, hundredWord, decimalWord, unitWord, digitWord);
         }
         System.out.println(resultList);
         String resultString = String.join(" ", resultList).trim().replaceAll(" +", " ");
