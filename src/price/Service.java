@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Service {
-    static List<Integer> n1 = Arrays.asList(0, 5, 6, 7, 8, 9);
-    static List<Integer> n2 = Arrays.asList(2, 3, 4);
+    private final static List<Integer> n1 = Arrays.asList(0, 5, 6, 7, 8, 9);
+    private final static List<Integer> n2 = Arrays.asList(2, 3, 4);
 
     public Integer getInputNumber() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -51,7 +51,7 @@ public class Service {
         return segments;
     }
 
-    public String analyzeHundred(long number) {
+    public String calculateHundred(long number) {
         int hundred = getHundred(number);
         return switch (hundred) {
             case 0 -> "";
@@ -68,11 +68,11 @@ public class Service {
         };
     }
 
-    public String analyzeDecimal(long number) {
+    public String calculateDecimal(long number) {
         int decimal = getDecimal(number);
         return switch (decimal) {
             case 0 -> "";
-            case 1 -> analyzeDecimalWithUnit(getUnit(number)); //вызов метода
+            case 1 -> calculateDecimalWithUnit(getUnit(number)); //вызов метода
             case 2 -> "двадцать";
             case 3 -> "тридцать";
             case 4 -> "сорок";
@@ -85,7 +85,7 @@ public class Service {
         };
     }
 
-    public String analyzeDecimalWithUnit(int unit) {
+    public String calculateDecimalWithUnit(int unit) {
         return switch (unit) {
             case 0 -> "десять";
             case 1 -> "одиннадцать";
@@ -101,12 +101,12 @@ public class Service {
         };
     }
 
-    public String analyzeUnit(long number, boolean isMale) {
+    public String calculateUnit(long originNumber, long number, boolean isMale) {
         int unit = getUnit(number);
         int decimal = getDecimal(number);
         if (decimal != 1) {
             return switch (unit) {
-                case 0 -> "";
+                case 0 -> (originNumber == 0L) ? "ноль" : "";
                 case 1 -> isMale ? "один" : "одна";
                 case 2 -> isMale ? "два" : "две";
                 case 3 -> "три";
@@ -135,48 +135,50 @@ public class Service {
         return (int) (number % 10); //число единиц
     }
 
-    public String analyzeWordPluralN1(int size) {
-        return switch (size) {
-            case 1 -> "рублей";
-            case 2 -> "тысяч";
-            case 3 -> "миллионов";
-            case 4 -> "миллиардов";
-            default -> throw new IllegalStateException("Недопустимый формат числа: " + size);
+    public String analyzeWordPluralN1(Digit digit) {
+        return switch (digit.name()) {
+            case "CURRENCY" -> "рублей";
+            case "THOUSAND" -> "тысяч";
+            case "MILLION" -> "миллионов";
+            case "BILLION" -> "миллиардов";
+            default -> throw new IllegalStateException("Недопустимый порядок числа: " + digit);
         };
     }
 
-    public String analyzeSingleWord(int size) {
-        return switch (size) {
-            case 1 -> "рубль";
-            case 2 -> "тысяча";
-            case 3 -> "миллион";
-            case 4 -> "миллиард";
-            default -> throw new IllegalStateException("Недопустимый формат числа: " + size);
+    public String analyzeSingleWord(Digit digit) {
+        return switch (digit.name()) {
+            case "CURRENCY" -> "рубль";
+            case "THOUSAND" -> "тысяча";
+            case "MILLION" -> "миллион";
+            case "BILLION" -> "миллиард";
+            default -> throw new IllegalStateException("Недопустимый порядок числа: " + digit);
         };
     }
 
-    public String analyzeWordPluralN2(int size) {
-        return switch (size) {
-            case 1 -> "рубля";
-            case 2 -> "тысячи";
-            case 3 -> "миллиона";
-            case 4 -> "миллиарда";
-            default -> throw new IllegalStateException("Недопустимый формат числа: " + size);
+    public String analyzeWordPluralN2(Digit digit) {
+        return switch (digit.name()) {
+            case "CURRENCY" -> "рубля";
+            case "THOUSAND" -> "тысячи";
+            case "MILLION" -> "миллиона";
+            case "BILLION" -> "миллиарда";
+            default -> throw new IllegalStateException("Недопустимый порядок числа: " + digit);
         };
     }
 
-    public boolean analyzeSex(int digit) {
-        return switch (digit) {
-            case 1, 3, 4 -> true;
-            case 2 -> false;
-            default -> throw new IllegalStateException("Недопустимый формат числа: " + digit);
+    public boolean analyzeSex(Digit digit) {
+        return switch (digit.name()) {
+            case "CURRENCY", "MILLION", "BILLION" -> true;
+            case "THOUSAND" -> false;
+            default -> throw new IllegalStateException("Недопустимый порядок числа: " + digit);
         };
     }
 
-    public String getWord(long number, int digit) {
+    public String getWord(long number, Digit digit) {
         int unit = getUnit(number);
         int decimal = getDecimal(number);
-        if (unit == 1 && decimal != 1) {
+        if (number == 0 && !digit.equals(Digit.CURRENCY)) {
+            return "";
+        } else if (unit == 1 && decimal != 1) {
             return analyzeSingleWord(digit);
         } else if (n1.contains(unit) || decimal == 1) {
             return analyzeWordPluralN1(digit);
@@ -185,5 +187,15 @@ public class Service {
         } else {
             throw new IllegalStateException("Недопустимый формат числа: " + digit);
         }
+    }
+
+    public Digit transformDigit(int digit) {
+        return switch (digit) {
+            case 1 -> Digit.CURRENCY;
+            case 2 -> Digit.THOUSAND;
+            case 3 -> Digit.MILLION;
+            case 4 -> Digit.BILLION;
+            default -> throw new IllegalStateException("Недопустимый разряд числа: " + digit);
+        };
     }
 }
