@@ -36,24 +36,40 @@ public class Service {
      * Исходное число делится на список порядков (сегментов) для дальнейшего преобразования
      * Например: 5001 -> [5, 1]
      *
-     * @param number - исходное число
+     * @param originNumber - исходное число
      * @return - список порядков числа
      */
-    public List<Long> getSegments(long number) {
+    public List<Long> getSegments(long originNumber) {
         List<Long> segments = new ArrayList<>();
-        while (number > 999) {
-            long seg = number / 1000;
-            segments.add(number - (seg * 1000));
-            number = seg;
+        while (originNumber > 999) {
+            long seg = originNumber / 1000;
+            segments.add(originNumber - (seg * 1000));
+            originNumber = seg;
         }
-        segments.add(number);
+        segments.add(originNumber);
         System.out.println(segments);
         return segments;
     }
 
-    public String calculateHundred(long number) {
-        int hundred = getHundred(number);
-        return switch (hundred) {
+
+    public List<Number> getNumbers(List<Long> segments) {
+        List<Number> numbers = new ArrayList<>();
+        //обход списка в обратном порядке для получения корректного порядка
+        for (int i = segments.size() - 1; i >= 0; i--) {
+            Number number = new Number(segments.get(i));
+            number.setHundred(calculateHundred(segments.get(i)));
+            number.setDecimal(calculateDecimal(segments.get(i)));
+            number.setUnit(calculateUnit(segments.get(i)));
+            Digit digit = transformDigit(i);
+            number.setDigit(digit);
+            number.setMale(analyzeSex(digit));
+            numbers.add(number);
+        }
+        return numbers;
+    }
+
+    public String analyzeHundred(Number number) {
+        return switch (number.getHundred()) {
             case 0 -> "";
             case 1 -> "сто";
             case 2 -> "двести";
@@ -64,15 +80,14 @@ public class Service {
             case 7 -> "семьсот";
             case 8 -> "восемьсот";
             case 9 -> "девятьсот";
-            default -> throw new IllegalStateException("Unexpected value: " + hundred);
+            default -> throw new IllegalStateException("Unexpected value: " + number.getHundred());
         };
     }
 
-    public String calculateDecimal(long number) {
-        int decimal = getDecimal(number);
-        return switch (decimal) {
+    public String analyzeDecimal(Number number) {
+        return switch (number.getDecimal()) {
             case 0 -> "";
-            case 1 -> calculateDecimalWithUnit(getUnit(number)); //вызов метода
+            case 1 -> analyzeDecimalWithUnit(number.getUnit()); //вызов метода
             case 2 -> "двадцать";
             case 3 -> "тридцать";
             case 4 -> "сорок";
@@ -81,11 +96,11 @@ public class Service {
             case 7 -> "семьдесят";
             case 8 -> "восемьдесят";
             case 9 -> "девяносто";
-            default -> throw new IllegalStateException("Unexpected value: " + decimal);
+            default -> throw new IllegalStateException("Unexpected value: " + number.getDecimal());
         };
     }
 
-    public String calculateDecimalWithUnit(int unit) {
+    public String analyzeDecimalWithUnit(int unit) {
         return switch (unit) {
             case 0 -> "десять";
             case 1 -> "одиннадцать";
@@ -101,14 +116,14 @@ public class Service {
         };
     }
 
-    public String calculateUnit(long originNumber, long number, boolean isMale) {
-        int unit = getUnit(number);
-        int decimal = getDecimal(number);
+    public String analyzeUnit(Number number, long originValue) {
+        int unit = calculateUnit(number.getUnit());
+        int decimal = calculateDecimal(number.getDecimal());
         if (decimal != 1) {
             return switch (unit) {
-                case 0 -> (originNumber == 0L) ? "ноль" : "";
-                case 1 -> isMale ? "один" : "одна";
-                case 2 -> isMale ? "два" : "две";
+                case 0 -> (originValue == 0L) ? "ноль" : "";
+                case 1 -> number.isMale() ? "один" : "одна";
+                case 2 -> number.isMale() ? "два" : "две";
                 case 3 -> "три";
                 case 4 -> "четыре";
                 case 5 -> "пять";
@@ -123,15 +138,15 @@ public class Service {
         }
     }
 
-    public int getHundred(long number) {
+    public int calculateHundred(long number) {
         return (int) (number / 100); //число сотен
     }
 
-    public int getDecimal(long number) {
+    public int calculateDecimal(long number) {
         return (int) (number % 100 / 10); //число десятков
     }
 
-    public int getUnit(long number) {
+    public int calculateUnit(long number) {
         return (int) (number % 10); //число единиц
     }
 
@@ -173,28 +188,26 @@ public class Service {
         };
     }
 
-    public String getWord(long number, Digit digit) {
-        int unit = getUnit(number);
-        int decimal = getDecimal(number);
-        if (number == 0 && !digit.equals(Digit.CURRENCY)) {
+    public String getWord(Number number) {
+        if (number.getValue() == 0 && !number.getDigit().equals(Digit.CURRENCY)) {
             return "";
-        } else if (unit == 1 && decimal != 1) {
-            return analyzeSingleWord(digit);
-        } else if (n1.contains(unit) || decimal == 1) {
-            return analyzeWordPluralN1(digit);
-        } else if (n2.contains(unit)) {
-            return analyzeWordPluralN2(digit);
+        } else if (number.getUnit() == 1 && number.getDecimal() != 1) {
+            return analyzeSingleWord(number.getDigit());
+        } else if (n1.contains(number.getUnit()) || number.getDecimal() == 1) {
+            return analyzeWordPluralN1(number.getDigit());
+        } else if (n2.contains(number.getUnit())) {
+            return analyzeWordPluralN2(number.getDigit());
         } else {
-            throw new IllegalStateException("Недопустимый формат числа: " + digit);
+            throw new IllegalStateException("Недопустимый формат числа: " + number);
         }
     }
 
     public Digit transformDigit(int digit) {
         return switch (digit) {
-            case 1 -> Digit.CURRENCY;
-            case 2 -> Digit.THOUSAND;
-            case 3 -> Digit.MILLION;
-            case 4 -> Digit.BILLION;
+            case 0 -> Digit.CURRENCY;
+            case 1 -> Digit.THOUSAND;
+            case 2 -> Digit.MILLION;
+            case 3 -> Digit.BILLION;
             default -> throw new IllegalStateException("Недопустимый разряд числа: " + digit);
         };
     }
