@@ -125,5 +125,14 @@ public class Service {
         return (int) (number % 10); //число единиц
     }
 
+    public String analyzeWord(int size) {
+        return switch (size) {
+            case 1 -> "рублей";
+            case 2 -> "тысяч";
+            case 3 -> "миллионов";
+            case 4 -> "миллиардов";
+            default -> throw new IllegalStateException("Недопустимый формат числа: " + size);
+        };
+    }
 
 }

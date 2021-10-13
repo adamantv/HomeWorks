@@ -13,11 +13,12 @@ public class Main {
         List<Long> numberList = service.getSegments(inputNumber);
         ArrayList<String> result = new ArrayList<>();
         System.out.println(numberList);
-        for (Long number : numberList) {
-            System.out.println(number);
-            int hundred = service.getHundred(number);
-            int decimal = service.getDecimal(number);
-            int unit = service.getUnit(number);
+        //обход списка в обратном порядке
+        for (int i = numberList.size() - 1; i >= 0; i--) {
+            System.out.println(numberList.get(i));
+            int hundred = service.getHundred(numberList.get(i));
+            int decimal = service.getDecimal(numberList.get(i));
+            int unit = service.getUnit(numberList.get(i));
             System.out.println(hundred + " " + decimal + " " + unit);
             String first = service.analyzeHundred(hundred);
             String second = service.analyzeDecimal(decimal, unit);
@@ -25,7 +26,9 @@ public class Main {
             if (decimal != 1) {
                 third = service.analyzeUnit(unit);
             }
-            String numberString = String.join(" ", first, second, third) + " ";
+            System.out.println(i + 1);
+            String word = service.analyzeWord(i + 1);
+            String numberString = String.join(" ", first, second, third, word) + " ";
             result.add(numberString);
         }
         System.out.println(result);
