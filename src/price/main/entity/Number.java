@@ -1,4 +1,6 @@
-package price;
+package price.main.entity;
+
+import price.main.enums.Digit;
 
 import java.util.Objects;
 

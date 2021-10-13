@@ -1,4 +1,7 @@
-package price;
+package price.main;
+
+import price.main.entity.Number;
+import price.main.service.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;

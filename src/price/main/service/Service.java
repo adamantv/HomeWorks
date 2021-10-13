@@ -1,4 +1,7 @@
-package price;
+package price.main.service;
+
+import price.main.entity.Number;
+import price.main.enums.Digit;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Service {
-    private final static List<Integer> n1 = Arrays.asList(0, 5, 6, 7, 8, 9);
-    private final static List<Integer> n2 = Arrays.asList(2, 3, 4);
+public class Service {//todo need to rename
+    private final static List<Integer> n1 = Arrays.asList(0, 5, 6, 7, 8, 9); //todo need to rename
+    private final static List<Integer> n2 = Arrays.asList(2, 3, 4); //todo need to rename
 
-    public Integer getInputNumber() {
+    public Integer getInputNumber() { //todo need to use
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             try {
@@ -150,7 +153,7 @@ public class Service {
         return (int) (number % 10); //число единиц
     }
 
-    public String analyzeWordPluralN1(Digit digit) {
+    public String analyzeWordPluralN1(Digit digit) {//todo need to rename
         return switch (digit.name()) {
             case "CURRENCY" -> "рублей";
             case "THOUSAND" -> "тысяч";
@@ -160,7 +163,7 @@ public class Service {
         };
     }
 
-    public String analyzeSingleWord(Digit digit) {
+    public String analyzeSingleWord(Digit digit) {//todo need to rename
         return switch (digit.name()) {
             case "CURRENCY" -> "рубль";
             case "THOUSAND" -> "тысяча";
@@ -170,7 +173,7 @@ public class Service {
         };
     }
 
-    public String analyzeWordPluralN2(Digit digit) {
+    public String analyzeWordPluralN2(Digit digit) {//todo need to rename
         return switch (digit.name()) {
             case "CURRENCY" -> "рубля";
             case "THOUSAND" -> "тысячи";
