@@ -23,14 +23,13 @@ public class NumberService {
         List<Long> segments = calculateService.getSegments(originValue);
         List<Number> numbers = calculateService.getNumbers(segments);
         ArrayList<String> resultList = new ArrayList<>();
-        for (Number number : numbers) {
-            System.out.println(number);
+        numbers.forEach(number -> {
             String hundredWord = analyzeService.getHundredWord(number);
             String decimalWord = analyzeService.getDecimalWordByNumber(number);
             String unitWord = analyzeService.getUnitWord(number, originValue);
             String digitWord = analyzeService.getDigitWord(number);
             Collections.addAll(resultList, hundredWord, decimalWord, unitWord, digitWord);
-        }
+        });
         return String.join(" ", resultList).trim().replaceAll(" +", " ");
     }
 }
