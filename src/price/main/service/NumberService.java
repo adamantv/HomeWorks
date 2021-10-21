@@ -31,7 +31,6 @@ public class NumberService {
             String digitWord = analyzeService.getDigitWord(number);
             Collections.addAll(resultList, hundredWord, decimalWord, unitWord, digitWord);
         }
-        System.out.println(resultList);
         return String.join(" ", resultList).trim().replaceAll(" +", " ");
     }
 }

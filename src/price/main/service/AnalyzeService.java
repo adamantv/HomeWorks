@@ -7,13 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AnalyzeService {
-    private final CalculateService calculateService;
     private final CurrencyService currencyService;
     private final static List<Integer> numbersForMultiple = Arrays.asList(0, 5, 6, 7, 8, 9);
     private final static List<Integer> numbersForDative = Arrays.asList(2, 3, 4);
 
     public AnalyzeService() {
-        this.calculateService = new CalculateService();
         this.currencyService = new RubleService();
     }
 
@@ -66,10 +64,8 @@ public class AnalyzeService {
     }
 
     public String getUnitWord(Number number, long originValue) {
-        int unit = calculateService.calculateUnit(number.getUnit());
-        int decimal = calculateService.calculateDecimal(number.getDecimal());
-        if (decimal != 1) {
-            return switch (unit) {
+        if (number.getDecimal() != 1) {
+            return switch (number.getUnit()) {
                 case 0 -> (originValue == 0L) ? "ноль" : "";
                 case 1 -> number.isMale() ? "один" : "одна";
                 case 2 -> number.isMale() ? "два" : "две";
@@ -80,7 +76,7 @@ public class AnalyzeService {
                 case 7 -> "семь";
                 case 8 -> "восемь";
                 case 9 -> "девять";
-                default -> throw new IllegalStateException("Unexpected value: " + unit);
+                default -> throw new IllegalStateException("Unexpected value: " + number.getUnit());
             };
         } else {
             return "";
@@ -100,6 +96,4 @@ public class AnalyzeService {
             throw new IllegalStateException("Недопустимый формат числа: " + number);
         }
     }
-
-
 }
