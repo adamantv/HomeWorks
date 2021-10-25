@@ -9,11 +9,11 @@ import java.util.List;
 public class CalculateService {//todo need to rename
 
     /**
-     * Исходное число делится на список порядков (сегментов) для дальнейшего преобразования
-     * Например: 5001 -> [5, 1]
+     * The input number is divided into a list of segments for next transformation
+     * For example: 5001 -> [5, 1]
      *
-     * @param originNumber - исходное число
-     * @return - список порядков числа
+     * @param originNumber - input number
+     * @return - list of number orders
      */
     public List<Long> getSegments(long originNumber) {
         List<Long> segments = new ArrayList<>();
@@ -28,6 +28,12 @@ public class CalculateService {//todo need to rename
     }
 
 
+    /**
+     * Method transformed segments (number orders) to numbers
+     *
+     * @param segments - list of number orders
+     * @return list of numbers
+     */
     public List<Number> getNumbers(List<Long> segments) {
         List<Number> numbers = new ArrayList<>();
         //обход списка в обратном порядке для получения корректного порядка
@@ -38,24 +44,48 @@ public class CalculateService {//todo need to rename
             number.setUnit(calculateUnit(segments.get(i)));
             Digit digit = transformDigit(i);
             number.setDigit(digit);
-            number.setMale(analyzeSex(digit));
+            number.setMale(getSex(digit));
             numbers.add(number);
         }
         return numbers;
     }
 
+    /**
+     * calculate hundred of number
+     *
+     * @param number - number from list of segments
+     * @return hundred value
+     */
     public int calculateHundred(long number) {
         return (int) (number / 100); //число сотен
     }
 
+    /**
+     * calculate decimal of number
+     *
+     * @param number - number from list of segments
+     * @return decimal value
+     */
     public int calculateDecimal(long number) {
         return (int) (number % 100 / 10); //число десятков
     }
 
+    /**
+     * calculate unit of number
+     *
+     * @param number - number from list of segments
+     * @return unit value
+     */
     public int calculateUnit(long number) {
         return (int) (number % 10); //число единиц
     }
 
+    /**
+     * transform number of digit to word
+     *
+     * @param digit in integer format
+     * @return digit in word format
+     */
     public Digit transformDigit(int digit) {
         return switch (digit) {
             case 0 -> Digit.CURRENCY;
@@ -66,7 +96,13 @@ public class CalculateService {//todo need to rename
         };
     }
 
-    public boolean analyzeSex(Digit digit) {
+    /**
+     * get ses of order by digit. "CURRENCY", "MILLION", "BILLION" - male, "THOUSAND" - female
+     *
+     * @param digit - digit of number
+     * @return true if digit male, else - female
+     */
+    public boolean getSex(Digit digit) {
         return switch (digit.name()) {
             case "CURRENCY", "MILLION", "BILLION" -> true;
             case "THOUSAND" -> false;

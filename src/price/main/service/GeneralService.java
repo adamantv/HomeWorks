@@ -6,17 +6,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NumberService {
-    private final AnalyzeService analyzeService;
+public class GeneralService {
+    private final AnalyzeNumberService analyzeService;
     private final InputDataService inputDataService;
     private final CalculateService calculateService;
 
-    public NumberService() {
-        this.analyzeService = new AnalyzeService();
+    public GeneralService() {
+        this.analyzeService = new AnalyzeNumberService();
         this.inputDataService = new InputDataService();
         this.calculateService = new CalculateService();
     }
 
+    /**
+     * General method for get input number and transform it to amount in words
+     * maximal order - billion
+     *
+     * @return amount in words
+     */
     public String enterDataAndGetResult() {
         long originValue = inputDataService.getInputNumber();
         System.out.println("originNumber: " + originValue);

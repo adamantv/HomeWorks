@@ -6,15 +6,22 @@ import price.main.enums.Digit;
 import java.util.Arrays;
 import java.util.List;
 
-public class AnalyzeService {
+/**
+ * Service for analyze numbers and transform it to words
+ */
+public class AnalyzeNumberService {
     private final CurrencyService currencyService;
     private final static List<Integer> numbersForMultiple = Arrays.asList(0, 5, 6, 7, 8, 9);
     private final static List<Integer> numbersForDative = Arrays.asList(2, 3, 4);
 
-    public AnalyzeService() {
+    public AnalyzeNumberService() {
         this.currencyService = new RubleService();
     }
 
+    /**
+     * @param number number for analyze
+     * @return hundred in word format
+     */
     public String getHundredWord(Number number) {
         return switch (number.getHundred()) {
             case 0 -> "";
@@ -31,10 +38,14 @@ public class AnalyzeService {
         };
     }
 
+    /**
+     * @param number number for analyze
+     * @return decimal in word format
+     */
     public String getDecimalWordByNumber(Number number) {
         return switch (number.getDecimal()) {
             case 0 -> "";
-            case 1 -> getDecimalWordByUnit(number.getUnit()); //вызов метода
+            case 1 -> getDecimalWordByUnit(number.getUnit());
             case 2 -> "двадцать";
             case 3 -> "тридцать";
             case 4 -> "сорок";
@@ -47,6 +58,12 @@ public class AnalyzeService {
         };
     }
 
+    /**
+     * Method for analyze number if decimal == 1
+     *
+     * @param unit number for analyze
+     * @return result value
+     */
     public String getDecimalWordByUnit(int unit) {
         return switch (unit) {
             case 0 -> "десять";
@@ -63,6 +80,10 @@ public class AnalyzeService {
         };
     }
 
+    /**
+     * @param number number for analyze
+     * @return unit in word format
+     */
     public String getUnitWord(Number number, long originValue) {
         if (number.getDecimal() != 1) {
             return switch (number.getUnit()) {
@@ -83,13 +104,19 @@ public class AnalyzeService {
         }
     }
 
+    /**
+     * Method for getting word by the digit
+     *
+     * @param number number for analyze
+     * @return digit in word format
+     */
     public String getDigitWord(Number number) {
         if (number.getValue() == 0 && !number.getDigit().equals(Digit.CURRENCY)) {
             return "";
         } else if (number.getUnit() == 1 && number.getDecimal() != 1) {
             return currencyService.getSingleCurrencyNominative(number.getDigit());
         } else if (numbersForMultiple.contains(number.getUnit()) || number.getDecimal() == 1) {
-            return currencyService.getMultipleCurrency(number.getDigit());
+            return currencyService.getPluralCurrency(number.getDigit());
         } else if (numbersForDative.contains(number.getUnit())) {
             return currencyService.getSingleCurrencyDative(number.getDigit());
         } else {

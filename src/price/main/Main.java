@@ -1,10 +1,10 @@
 package price.main;
 
-import price.main.service.NumberService;
+import price.main.service.GeneralService;
 
 public class Main {
     public static void main(String[] args) {
-        NumberService numberService = new NumberService();
+        GeneralService numberService = new GeneralService();
         String result = numberService.enterDataAndGetResult();
         System.out.println(result);
     }

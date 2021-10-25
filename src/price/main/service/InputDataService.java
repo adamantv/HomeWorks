@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class InputDataService {
+    /**
+     * Method for get input data by the keyboard and transform it to integer
+     *
+     * @return input number as integer
+     */
     public Integer getInputNumber() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите положительное число");
