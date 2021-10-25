@@ -4,7 +4,7 @@ import price.main.enums.Digit;
 
 import java.util.Objects;
 
-public class Number {
+public class NumberEntity {
     private long value;
     private int hundred;
     private int decimal;
@@ -12,8 +12,17 @@ public class Number {
     private boolean isMale;
     private Digit digit;
 
-    public Number(long value) {
+    public NumberEntity(long value) {
         this.value = value;
+    }
+
+    public NumberEntity(long value, int hundred, int decimal, int unit, boolean isMale, Digit digit) {
+        this.value = value;
+        this.hundred = hundred;
+        this.decimal = decimal;
+        this.unit = unit;
+        this.isMale = isMale;
+        this.digit = digit;
     }
 
     public long getValue() {
@@ -67,9 +76,9 @@ public class Number {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Number)) return false;
-        Number number = (Number) o;
-        return getValue() == number.getValue() && getHundred() == number.getHundred() && getDecimal() == number.getDecimal() && getUnit() == number.getUnit() && isMale() == number.isMale() && getDigit() == number.getDigit();
+        if (!(o instanceof NumberEntity)) return false;
+        NumberEntity numberEntity = (NumberEntity) o;
+        return getValue() == numberEntity.getValue() && getHundred() == numberEntity.getHundred() && getDecimal() == numberEntity.getDecimal() && getUnit() == numberEntity.getUnit() && isMale() == numberEntity.isMale() && getDigit() == numberEntity.getDigit();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package price.main.service;
 
-import price.main.entity.Number;
+import price.main.entity.NumberEntity;
 import price.main.enums.Digit;
 
 import java.util.Arrays;
@@ -19,11 +19,11 @@ public class AnalyzeNumberService {
     }
 
     /**
-     * @param number number for analyze
+     * @param numberEntity number for analyze
      * @return hundred in word format
      */
-    public String getHundredWord(Number number) {
-        return switch (number.getHundred()) {
+    public String getHundredWord(NumberEntity numberEntity) {
+        return switch (numberEntity.getHundred()) {
             case 0 -> "";
             case 1 -> "сто";
             case 2 -> "двести";
@@ -34,18 +34,18 @@ public class AnalyzeNumberService {
             case 7 -> "семьсот";
             case 8 -> "восемьсот";
             case 9 -> "девятьсот";
-            default -> throw new IllegalStateException("Unexpected value: " + number.getHundred());
+            default -> throw new IllegalStateException("Unexpected value: " + numberEntity.getHundred());
         };
     }
 
     /**
-     * @param number number for analyze
+     * @param numberEntity number for analyze
      * @return decimal in word format
      */
-    public String getDecimalWordByNumber(Number number) {
-        return switch (number.getDecimal()) {
+    public String getDecimalWordByNumber(NumberEntity numberEntity) {
+        return switch (numberEntity.getDecimal()) {
             case 0 -> "";
-            case 1 -> getDecimalWordByUnit(number.getUnit());
+            case 1 -> getDecimalWordByUnit(numberEntity.getUnit());
             case 2 -> "двадцать";
             case 3 -> "тридцать";
             case 4 -> "сорок";
@@ -54,7 +54,7 @@ public class AnalyzeNumberService {
             case 7 -> "семьдесят";
             case 8 -> "восемьдесят";
             case 9 -> "девяносто";
-            default -> throw new IllegalStateException("Unexpected value: " + number.getDecimal());
+            default -> throw new IllegalStateException("Unexpected value: " + numberEntity.getDecimal());
         };
     }
 
@@ -81,15 +81,15 @@ public class AnalyzeNumberService {
     }
 
     /**
-     * @param number number for analyze
+     * @param numberEntity number for analyze
      * @return unit in word format
      */
-    public String getUnitWord(Number number, long originValue) {
-        if (number.getDecimal() != 1) {
-            return switch (number.getUnit()) {
+    public String getUnitWord(NumberEntity numberEntity, long originValue) {
+        if (numberEntity.getDecimal() != 1) {
+            return switch (numberEntity.getUnit()) {
                 case 0 -> (originValue == 0L) ? "ноль" : "";
-                case 1 -> number.isMale() ? "один" : "одна";
-                case 2 -> number.isMale() ? "два" : "две";
+                case 1 -> numberEntity.isMale() ? "один" : "одна";
+                case 2 -> numberEntity.isMale() ? "два" : "две";
                 case 3 -> "три";
                 case 4 -> "четыре";
                 case 5 -> "пять";
@@ -97,7 +97,7 @@ public class AnalyzeNumberService {
                 case 7 -> "семь";
                 case 8 -> "восемь";
                 case 9 -> "девять";
-                default -> throw new IllegalStateException("Unexpected value: " + number.getUnit());
+                default -> throw new IllegalStateException("Unexpected value: " + numberEntity.getUnit());
             };
         } else {
             return "";
@@ -107,20 +107,20 @@ public class AnalyzeNumberService {
     /**
      * Method for getting word by the digit
      *
-     * @param number number for analyze
+     * @param numberEntity number for analyze
      * @return digit in word format
      */
-    public String getDigitWord(Number number) {
-        if (number.getValue() == 0 && !number.getDigit().equals(Digit.CURRENCY)) {
+    public String getDigitWord(NumberEntity numberEntity) {
+        if (numberEntity.getValue() == 0 && !numberEntity.getDigit().equals(Digit.CURRENCY)) {
             return "";
-        } else if (number.getUnit() == 1 && number.getDecimal() != 1) {
-            return currencyService.getSingleCurrencyNominative(number.getDigit());
-        } else if (numbersForMultiple.contains(number.getUnit()) || number.getDecimal() == 1) {
-            return currencyService.getPluralCurrency(number.getDigit());
-        } else if (numbersForDative.contains(number.getUnit())) {
-            return currencyService.getSingleCurrencyDative(number.getDigit());
+        } else if (numberEntity.getUnit() == 1 && numberEntity.getDecimal() != 1) {
+            return currencyService.getSingleCurrencyNominative(numberEntity.getDigit());
+        } else if (numbersForMultiple.contains(numberEntity.getUnit()) || numberEntity.getDecimal() == 1) {
+            return currencyService.getPluralCurrency(numberEntity.getDigit());
+        } else if (numbersForDative.contains(numberEntity.getUnit())) {
+            return currencyService.getSingleCurrencyDative(numberEntity.getDigit());
         } else {
-            throw new IllegalStateException("Недопустимый формат числа: " + number);
+            throw new IllegalStateException("Недопустимый формат числа: " + numberEntity);
         }
     }
 }

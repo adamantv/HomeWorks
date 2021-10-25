@@ -1,6 +1,6 @@
 package price.main.service;
 
-import price.main.entity.Number;
+import price.main.entity.NumberEntity;
 import price.main.enums.Digit;
 
 import java.util.ArrayList;
@@ -34,20 +34,20 @@ public class CalculateService {//todo need to rename
      * @param segments - list of number orders
      * @return list of numbers
      */
-    public List<Number> getNumbers(List<Long> segments) {
-        List<Number> numbers = new ArrayList<>();
+    public List<NumberEntity> getNumbers(List<Long> segments) {
+        List<NumberEntity> numberEntities = new ArrayList<>();
         //обход списка в обратном порядке для получения корректного порядка
         for (int i = segments.size() - 1; i >= 0; i--) {
-            Number number = new Number(segments.get(i));
-            number.setHundred(calculateHundred(segments.get(i)));
-            number.setDecimal(calculateDecimal(segments.get(i)));
-            number.setUnit(calculateUnit(segments.get(i)));
+            NumberEntity numberEntity = new NumberEntity(segments.get(i));
+            numberEntity.setHundred(calculateHundred(segments.get(i)));
+            numberEntity.setDecimal(calculateDecimal(segments.get(i)));
+            numberEntity.setUnit(calculateUnit(segments.get(i)));
             Digit digit = transformDigit(i);
-            number.setDigit(digit);
-            number.setMale(getSex(digit));
-            numbers.add(number);
+            numberEntity.setDigit(digit);
+            numberEntity.setMale(getSex(digit));
+            numberEntities.add(numberEntity);
         }
-        return numbers;
+        return numberEntities;
     }
 
     /**

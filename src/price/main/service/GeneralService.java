@@ -1,6 +1,6 @@
 package price.main.service;
 
-import price.main.entity.Number;
+import price.main.entity.NumberEntity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,13 +27,13 @@ public class GeneralService {
         long originValue = inputDataService.getInputNumber();
         System.out.println("originNumber: " + originValue);
         List<Long> segments = calculateService.getSegments(originValue);
-        List<Number> numbers = calculateService.getNumbers(segments);
+        List<NumberEntity> numberEntities = calculateService.getNumbers(segments);
         ArrayList<String> resultList = new ArrayList<>();
-        numbers.forEach(number -> {
-            String hundredWord = analyzeService.getHundredWord(number);
-            String decimalWord = analyzeService.getDecimalWordByNumber(number);
-            String unitWord = analyzeService.getUnitWord(number, originValue);
-            String digitWord = analyzeService.getDigitWord(number);
+        numberEntities.forEach(numberEntity -> {
+            String hundredWord = analyzeService.getHundredWord(numberEntity);
+            String decimalWord = analyzeService.getDecimalWordByNumber(numberEntity);
+            String unitWord = analyzeService.getUnitWord(numberEntity, originValue);
+            String digitWord = analyzeService.getDigitWord(numberEntity);
             Collections.addAll(resultList, hundredWord, decimalWord, unitWord, digitWord);
         });
         return String.join(" ", resultList).trim().replaceAll(" +", " ");
