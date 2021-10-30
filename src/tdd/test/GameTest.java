@@ -1,9 +1,9 @@
-package otus.test;
+package tdd.test;
 
-import otus.game.*;
-import otus.test.stubs.DiceForTheTie;
-import otus.test.stubs.DiceForVictoryOfFirstPlayer;
-import otus.test.stubs.DiceForVictoryOfSecondPlayer;
+import tdd.game.*;
+import tdd.test.stubs.DiceForTheTie;
+import tdd.test.stubs.DiceForVictoryOfFirstPlayer;
+import tdd.test.stubs.DiceForVictoryOfSecondPlayer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

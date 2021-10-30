@@ -1,4 +1,4 @@
-package otus.game;
+package tdd.game;
 
 public class GameWinnerConsolePrinter implements GameWinnerPrinter {
     @Override

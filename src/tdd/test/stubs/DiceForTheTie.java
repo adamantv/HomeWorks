@@ -1,6 +1,6 @@
-package otus.test.stubs;
+package tdd.test.stubs;
 
-import otus.game.Dice;
+import tdd.game.Dice;
 
 public class DiceForTheTie implements Dice {
     /**

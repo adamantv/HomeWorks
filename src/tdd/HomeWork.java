@@ -1,8 +1,8 @@
-package otus;
+package tdd;
 
 
-import otus.test.DiceTest;
-import otus.test.GameTest;
+import tdd.test.DiceTest;
+import tdd.test.GameTest;
 
 public class HomeWork {
     /*

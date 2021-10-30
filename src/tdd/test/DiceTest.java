@@ -1,7 +1,7 @@
-package otus.test;
+package tdd.test;
 
-import otus.game.Dice;
-import otus.game.DiceImpl;
+import tdd.game.Dice;
+import tdd.game.DiceImpl;
 
 import java.time.Instant;
 

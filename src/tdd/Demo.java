@@ -1,6 +1,6 @@
-package otus;
+package tdd;
 
-import otus.game.*;
+import tdd.game.*;
 
 public class Demo {
 
