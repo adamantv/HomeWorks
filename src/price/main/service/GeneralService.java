@@ -28,7 +28,7 @@ public class GeneralService {
         List<NumberEntity> numberEntities = calculateService.getNumbers(originValue);
         ArrayList<String> resultList = new ArrayList<>();
         numberEntities.forEach(numberEntity -> {
-            String hundredWord = analyzeService.getFinalWord(numberEntity, originValue);
+            String hundredWord = analyzeService.generateFinalWord(numberEntity, originValue);
             if (!hundredWord.isEmpty()) {
                 resultList.add(hundredWord);
             }

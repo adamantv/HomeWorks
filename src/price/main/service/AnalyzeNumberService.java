@@ -127,7 +127,7 @@ public class AnalyzeNumberService {
     /**
      * Method for getting word for one order
      */
-    public String getFinalWord(NumberEntity numberEntity, long originValue) {
+    public String generateFinalWord(NumberEntity numberEntity, long originValue) {
         String hundredWord = getHundredWord(numberEntity);
         String decimalWord = getDecimalWordByNumber(numberEntity);
         String unitWord = getUnitWord(numberEntity, originValue);

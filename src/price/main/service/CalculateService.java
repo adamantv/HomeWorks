@@ -39,16 +39,21 @@ public class CalculateService {//todo need to rename
         List<NumberEntity> numberEntities = new ArrayList<>();
         //обход списка в обратном порядке для получения корректного порядка
         for (int i = segments.size() - 1; i >= 0; i--) {
-            NumberEntity numberEntity = new NumberEntity(segments.get(i));
-            numberEntity.setHundred(calculateHundred(segments.get(i)));
-            numberEntity.setDecimal(calculateDecimal(segments.get(i)));
-            numberEntity.setUnit(calculateUnit(segments.get(i)));
-            Digit digit = transformDigit(i);
-            numberEntity.setDigit(digit);
-            numberEntity.setMale(getSex(digit));
+            NumberEntity numberEntity = createNumberEntity(segments.get(i), i);
             numberEntities.add(numberEntity);
         }
         return numberEntities;
+    }
+
+    private NumberEntity createNumberEntity(long value, int digitNumber) {
+        NumberEntity numberEntity = new NumberEntity(value);
+        numberEntity.setHundred(calculateHundred(value));
+        numberEntity.setDecimal(calculateDecimal(value));
+        numberEntity.setUnit(calculateUnit(value));
+        Digit digit = transformDigit(digitNumber);
+        numberEntity.setDigit(digit);
+        numberEntity.setMale(getSex(digit));
+        return numberEntity;
     }
 
     /**
