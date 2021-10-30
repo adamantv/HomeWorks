@@ -17,14 +17,12 @@ public class GeneralService {
     }
 
     /**
-     * General method for get input number and transform it to amount in words
+     * General method transform input number to amount in words
      * maximal order - billion
      *
      * @return amount in words
      */
-    public String enterDataAndGetResult() {
-        long originValue = inputDataService.getInputNumber();
-        System.out.println("originNumber: " + originValue);
+    public String getResultWord(long originValue) {
         List<NumberEntity> numberEntities = calculateService.getNumbers(originValue);
         ArrayList<String> resultList = new ArrayList<>();
         numberEntities.forEach(numberEntity -> {

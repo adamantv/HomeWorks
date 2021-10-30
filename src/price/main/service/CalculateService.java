@@ -6,7 +6,7 @@ import price.main.enums.Digit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalculateService {//todo need to rename
+public class CalculateService {
 
     /**
      * The input number is divided into a list of segments for next transformation
@@ -23,7 +23,6 @@ public class CalculateService {//todo need to rename
             originNumber = seg;
         }
         segments.add(originNumber);
-        System.out.println(segments);
         return segments;
     }
 
@@ -45,6 +44,9 @@ public class CalculateService {//todo need to rename
         return numberEntities;
     }
 
+    /**
+     * Method for creating NumberEntity for future operations
+     */
     private NumberEntity createNumberEntity(long value, int digitNumber) {
         NumberEntity numberEntity = new NumberEntity(value);
         numberEntity.setHundred(calculateHundred(value));

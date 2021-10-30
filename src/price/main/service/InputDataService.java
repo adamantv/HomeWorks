@@ -9,13 +9,13 @@ public class InputDataService {
      *
      * @return input number as integer
      */
-    public Integer getInputNumber() {
+    public Long getInputNumber() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите положительное число");
         while (true) {
             try {
                 String inputString = reader.readLine();
-                int inputNumber = Integer.parseInt(inputString);
+                long inputNumber = Long.parseLong(inputString);
                 if (inputNumber >= 0) {
                     return inputNumber;
                 } else {
