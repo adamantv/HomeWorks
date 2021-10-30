@@ -22,7 +22,7 @@ public class AnalyzeNumberService {
      * @param numberEntity number for analyze
      * @return hundred in word format
      */
-    public String getHundredWord(NumberEntity numberEntity) {
+    private String getHundredWord(NumberEntity numberEntity) {
         return switch (numberEntity.getHundred()) {
             case 0 -> "";
             case 1 -> "сто";
@@ -42,7 +42,7 @@ public class AnalyzeNumberService {
      * @param numberEntity number for analyze
      * @return decimal in word format
      */
-    public String getDecimalWordByNumber(NumberEntity numberEntity) {
+    private String getDecimalWordByNumber(NumberEntity numberEntity) {
         return switch (numberEntity.getDecimal()) {
             case 0 -> "";
             case 1 -> getDecimalWordByUnit(numberEntity.getUnit());
@@ -64,7 +64,7 @@ public class AnalyzeNumberService {
      * @param unit number for analyze
      * @return result value
      */
-    public String getDecimalWordByUnit(int unit) {
+    private String getDecimalWordByUnit(int unit) {
         return switch (unit) {
             case 0 -> "десять";
             case 1 -> "одиннадцать";
@@ -84,7 +84,7 @@ public class AnalyzeNumberService {
      * @param numberEntity number for analyze
      * @return unit in word format
      */
-    public String getUnitWord(NumberEntity numberEntity, long originValue) {
+    private String getUnitWord(NumberEntity numberEntity, long originValue) {
         if (numberEntity.getDecimal() != 1) {
             return switch (numberEntity.getUnit()) {
                 case 0 -> (originValue == 0L) ? "ноль" : "";
@@ -110,7 +110,7 @@ public class AnalyzeNumberService {
      * @param numberEntity number for analyze
      * @return digit in word format
      */
-    public String getDigitWord(NumberEntity numberEntity) {
+    private String getDigitWord(NumberEntity numberEntity) {
         if (numberEntity.getValue() == 0 && !numberEntity.getDigit().equals(Digit.CURRENCY)) {
             return "";
         } else if (numberEntity.getUnit() == 1 && numberEntity.getDecimal() != 1) {
@@ -122,5 +122,17 @@ public class AnalyzeNumberService {
         } else {
             throw new IllegalStateException("Недопустимый формат числа: " + numberEntity);
         }
+    }
+
+    /**
+     * Method for getting word for one order
+     */
+    public String getFinalWord(NumberEntity numberEntity, long originValue) {
+        String hundredWord = getHundredWord(numberEntity);
+        String decimalWord = getDecimalWordByNumber(numberEntity);
+        String unitWord = getUnitWord(numberEntity, originValue);
+        String digitWord = getDigitWord(numberEntity);
+        List<String> words = Arrays.asList(hundredWord, decimalWord, unitWord, digitWord);
+        return String.join(" ", words).trim().replaceAll(" +", " ");
     }
 }

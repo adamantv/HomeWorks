@@ -3,7 +3,6 @@ package price.main.service;
 import price.main.entity.NumberEntity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GeneralService {
@@ -29,12 +28,11 @@ public class GeneralService {
         List<NumberEntity> numberEntities = calculateService.getNumbers(originValue);
         ArrayList<String> resultList = new ArrayList<>();
         numberEntities.forEach(numberEntity -> {
-            String hundredWord = analyzeService.getHundredWord(numberEntity);
-            String decimalWord = analyzeService.getDecimalWordByNumber(numberEntity);
-            String unitWord = analyzeService.getUnitWord(numberEntity, originValue);
-            String digitWord = analyzeService.getDigitWord(numberEntity);
-            Collections.addAll(resultList, hundredWord, decimalWord, unitWord, digitWord);
+            String hundredWord = analyzeService.getFinalWord(numberEntity, originValue);
+            if (!hundredWord.isEmpty()) {
+                resultList.add(hundredWord);
+            }
         });
-        return String.join(" ", resultList).trim().replaceAll(" +", " ");
+        return String.join(" ", resultList);
     }
 }

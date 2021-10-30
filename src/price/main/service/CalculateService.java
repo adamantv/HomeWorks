@@ -57,7 +57,7 @@ public class CalculateService {//todo need to rename
      * @param number - number from list of segments
      * @return hundred value
      */
-    public int calculateHundred(long number) {
+    private int calculateHundred(long number) {
         return (int) (number / 100); //число сотен
     }
 
@@ -67,7 +67,7 @@ public class CalculateService {//todo need to rename
      * @param number - number from list of segments
      * @return decimal value
      */
-    public int calculateDecimal(long number) {
+    private int calculateDecimal(long number) {
         return (int) (number % 100 / 10); //число десятков
     }
 
@@ -77,7 +77,7 @@ public class CalculateService {//todo need to rename
      * @param number - number from list of segments
      * @return unit value
      */
-    public int calculateUnit(long number) {
+    private int calculateUnit(long number) {
         return (int) (number % 10); //число единиц
     }
 
@@ -87,7 +87,7 @@ public class CalculateService {//todo need to rename
      * @param digit in integer format
      * @return digit in word format
      */
-    public Digit transformDigit(int digit) {
+    private Digit transformDigit(int digit) {
         return switch (digit) {
             case 0 -> Digit.CURRENCY;
             case 1 -> Digit.THOUSAND;
@@ -103,7 +103,7 @@ public class CalculateService {//todo need to rename
      * @param digit - digit of number
      * @return true if digit male, else - female
      */
-    public boolean getSex(Digit digit) {
+    private boolean getSex(Digit digit) {
         return switch (digit.name()) {
             case "CURRENCY", "MILLION", "BILLION" -> true;
             case "THOUSAND" -> false;
