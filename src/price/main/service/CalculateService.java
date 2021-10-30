@@ -15,7 +15,7 @@ public class CalculateService {//todo need to rename
      * @param originNumber - input number
      * @return - list of number orders
      */
-    public List<Long> getSegments(long originNumber) {
+    private List<Long> getSegments(long originNumber) {
         List<Long> segments = new ArrayList<>();
         while (originNumber > 999) {
             long seg = originNumber / 1000;
@@ -31,10 +31,11 @@ public class CalculateService {//todo need to rename
     /**
      * Method transformed segments (number orders) to numbers
      *
-     * @param segments - list of number orders
+     * @param originNumber - list of number orders
      * @return list of numbers
      */
-    public List<NumberEntity> getNumbers(List<Long> segments) {
+    public List<NumberEntity> getNumbers(long originNumber) {
+        List<Long> segments = getSegments(originNumber);
         List<NumberEntity> numberEntities = new ArrayList<>();
         //обход списка в обратном порядке для получения корректного порядка
         for (int i = segments.size() - 1; i >= 0; i--) {

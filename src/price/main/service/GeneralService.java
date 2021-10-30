@@ -26,8 +26,7 @@ public class GeneralService {
     public String enterDataAndGetResult() {
         long originValue = inputDataService.getInputNumber();
         System.out.println("originNumber: " + originValue);
-        List<Long> segments = calculateService.getSegments(originValue);
-        List<NumberEntity> numberEntities = calculateService.getNumbers(segments);
+        List<NumberEntity> numberEntities = calculateService.getNumbers(originValue);
         ArrayList<String> resultList = new ArrayList<>();
         numberEntities.forEach(numberEntity -> {
             String hundredWord = analyzeService.getHundredWord(numberEntity);
