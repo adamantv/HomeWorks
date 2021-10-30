@@ -6,9 +6,9 @@ import java.util.Objects;
 
 public class NumberEntity {
     private long value;
-    private int hundred;
-    private int decimal;
-    private int unit;
+    private int hundred = 0;
+    private int decimal = 0;
+    private int unit = 0;
     private boolean isMale;
     private Digit digit;
 

@@ -33,6 +33,7 @@ public class GeneralService {
                 resultList.add(hundredWord);
             }
         });
-        return String.join(" ", resultList);
+        String word = String.join(" ", resultList);
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 }
